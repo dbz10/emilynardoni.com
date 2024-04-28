@@ -5,12 +5,20 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"time"
 )
+
+type GenericData struct {
+	Now time.Time
+}
 
 // render executes a template into a bytes buffer and returns an error if anything goes wrong in the process.
 func render(ts *template.Template) (*bytes.Buffer, error) {
+	var data = GenericData{
+		Now: time.Now(),
+	}
 	buf := new(bytes.Buffer)
-	err := ts.Execute(buf, nil)
+	err := ts.Execute(buf, data)
 	if err != nil {
 		log.Printf("Encountered an error when trying to execute template, %s", err)
 		return nil, err
