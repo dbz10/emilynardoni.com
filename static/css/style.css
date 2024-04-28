@@ -1,0 +1,47 @@
+.navbar-brand {
+    font-size: 4em;
+    vertical-align: text-bottom;
+    display: flex;
+    align-items: flex-end;
+    text-align: left;
+    line-height: 100%;
+    padding-left: 30px;
+    color: antiquewhite;
+}
+
+.nav-link {
+    font-family: 'Belleza', serif;
+    font-size: 1.5em;
+    letter-spacing: 1.29px;
+    vertical-align: text-bottom;
+    display: flex;
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+    align-items: flex-end;
+    color: antiquewhite;
+}
+
+.navbar-nav {
+    padding-right: 30px;
+}
+
+a:hover {
+    color: antiquewhite !important;
+}
+
+.navbar {
+    background-image: url("/static/img/header-banner.png");
+    background-size: cover;
+    background-position: bottom;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    min-height: 40vh;
+    font-family: 'Belleza', serif;
+}
+
+p {
+    text-align: left;
+}

@@ -3,15 +3,28 @@
 {{define "title"}}Home{{end}}
 
 {{define "body"}}
-<h2>This is the home page</h2>
-<p>There's nothing here yet</p>
 
+<div class="container-fluid with=100% py-5 px-10 ">
+    <div class="row justify-content-md-center">
+        <div class="col-1"></div>
+        <div class="col md-auto">
+            <img src="/static/img/about-img.jpeg" alt="" height="400px">
+        </div>
+        <div class="col md-auto">
+            <h1 class="text-center mb-3">
+                <u>About Me</u>
+            </h1>
+            <p>
+                I am a Kavli Fellow at the Kavli Institute for the Physics and Mathematics of the Universe (IPMU) in
+                Japan, with research interests in theoretical high energy physics. My work focuses on illuminating the
+                non-perturbative properties of Quantum Field Theories using supersymmetry and string theory. I received
+                my Ph.D. from the University of California, San Diego, and then completed a postdoctoral research
+                position at UCLA before moving to my current position at IPMU.
+            </p>
+        </div>
 
-<div id="d1">
-    <p>Div 1</p>
-</div>
-<div id="d2">
-    <p>Div 2</p>
+        <div class="col-1"></div>
+    </div>
 </div>
 
 {{end}}

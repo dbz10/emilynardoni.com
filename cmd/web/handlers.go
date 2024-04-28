@@ -1,47 +1,127 @@
 package main
 
 import (
+	"bytes"
+	"html/template"
 	"log"
 	"net/http"
-	"text/template"
 )
 
-func (app *application) home(w http.ResponseWriter, r *http.Request) {
+// render executes a template into a bytes buffer and returns an error if anything goes wrong in the process.
+func render(ts *template.Template) (*bytes.Buffer, error) {
+	buf := new(bytes.Buffer)
+	err := ts.Execute(buf, nil)
+	if err != nil {
+		log.Printf("Encountered an error when trying to execute template, %s", err)
+		return nil, err
+	}
+	return buf, nil
+
+}
+
+func (app *application) Home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
 
-	files := []string{
-		"./static/html/home.page.tmpl",
-		"./static/html/base.layout.tmpl",
-		"./static/html/footer.partial.tmpl",
-		"./static/html/navbar.partial.tmpl",
+	var (
+		ts  *template.Template
+		ok  bool
+		err error
+	)
+	if app.useCache {
+		ts, ok = app.templateCache["home.page.tmpl"]
+		if !ok {
+			log.Println("Couldn't find the `home.page.tmpl` template in the template cache")
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		ts, err = loadTemplate("./static/html/home.page.tmpl", "./static/html")
+		if err != nil {
+			log.Printf("Failed to load home page template with %s", err)
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		}
 	}
 
-	ts, err := template.ParseFiles(files...)
+	buf, err := render(ts)
 	if err != nil {
-		log.Println(err)
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 
-	err = ts.Execute(w, nil)
+	_, err = buf.WriteTo(w)
 	if err != nil {
-		log.Println(err)
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+}
+
+func (app *application) Research(w http.ResponseWriter, r *http.Request) {
+	var (
+		ts  *template.Template
+		ok  bool
+		err error
+	)
+	if app.useCache {
+		ts, ok = app.templateCache["research.page.tmpl"]
+		if !ok {
+			log.Println("Couldn't find the `research.page.tmpl` template in the template cache")
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		ts, err = loadTemplate("./static/html/research.page.tmpl", "./static/html")
+		if err != nil {
+			log.Printf("Failed to load research page template with %s", err)
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		}
 	}
 
+	buf, err := render(ts)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+
+	_, err = buf.WriteTo(w)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
 }
 
-func (app *application) about(w http.ResponseWriter, r *http.Request) {
-	_, _ = w.Write([]byte("This is the about page"))
-}
+func (app *application) Cv(w http.ResponseWriter, r *http.Request) {
+	var (
+		ts  *template.Template
+		ok  bool
+		err error
+	)
+	if app.useCache {
+		ts, ok = app.templateCache["cv.page.tmpl"]
+		if !ok {
+			log.Println("Couldn't find the `cv.page.tmpl` template in the template cache")
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		ts, err = loadTemplate("./static/html/cv.page.tmpl", "./static/html")
+		if err != nil {
+			log.Printf("Failed to load cv page template with %s", err)
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		}
+	}
 
-func (app *application) research(w http.ResponseWriter, r *http.Request) {
-	_, _ = w.Write([]byte("This is the reserach page"))
-}
+	buf, err := render(ts)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
 
-func (app *application) downloadCv(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./static/content/emily_nardoni.pdf")
+	_, err = buf.WriteTo(w)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
 }
