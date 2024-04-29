@@ -6,7 +6,8 @@
     text-align: left;
     line-height: 100%;
     padding-left: 30px;
-    color: antiquewhite;
+    color: rgb(250, 250, 222);
+
 }
 
 .nav-link {
@@ -18,15 +19,11 @@
     margin-left: 0.3em;
     margin-right: 0.3em;
     align-items: flex-end;
-    color: antiquewhite;
+    color: rgb(250, 250, 222);
 }
 
 .navbar-nav {
     padding-right: 30px;
-}
-
-a:hover {
-    color: antiquewhite !important;
 }
 
 .navbar {
@@ -44,4 +41,26 @@ a:hover {
 
 p {
     text-align: left;
+    font-family: 'Montserrat';
+}
+
+
+@font-face {
+    font-family: 'roca';
+    src: url('roca-regular.ttf');
+}
+
+.subheading {
+    font-family: 'roca', serif;
+    font-style: normal;
+    font-weight: bold;
+    text-align: left;
+    color: rgb(162, 73, 54);
+}
+
+.photo-caption {
+    font-family: 'Montserrat';
+    font-size: x-small;
+    font-style: italic;
+    font-weight: lighter;
 }

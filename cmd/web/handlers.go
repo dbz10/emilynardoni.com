@@ -100,6 +100,40 @@ func (app *application) Research(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (app *application) Group(w http.ResponseWriter, r *http.Request) {
+	var (
+		ts  *template.Template
+		ok  bool
+		err error
+	)
+	if app.useCache {
+		ts, ok = app.templateCache["group.page.tmpl"]
+		if !ok {
+			log.Println("Couldn't find the `cv.page.tmpl` template in the template cache")
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		ts, err = loadTemplate("./static/html/group.page.tmpl", "./static/html")
+		if err != nil {
+			log.Printf("Failed to load cv page template with %s", err)
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		}
+	}
+
+	buf, err := render(ts)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+
+	_, err = buf.WriteTo(w)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+}
+
 func (app *application) Cv(w http.ResponseWriter, r *http.Request) {
 	var (
 		ts  *template.Template
