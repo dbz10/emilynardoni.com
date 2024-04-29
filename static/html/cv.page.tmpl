@@ -4,6 +4,9 @@
 
 {{define "body"}}
 <div class="embed-responsive pt-5">
-    <iframe class="embed-responsive" src="/static/content/EN_CV.pdf" width="80%" height="700px"></iframe>
+    <object class="embed-responsive" data="/static/content/EN_CV.pdf" type="application/pdf" , width="80%"
+        height="700px">
+        View my CV <a href="/static/content/EN_CV.pdf">here</a>.
+    </object>
 </div>
 {{end}}
