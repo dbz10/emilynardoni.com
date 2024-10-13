@@ -11,20 +11,20 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
+      - name: setup node.js
         uses: actions/setup-node@v3
         with:
           node-version: "22"
 
-      - name: Install dependencies
+      - name: install semantic-release
         run: npm install semantic-release
 
-      - name: Semantic Release
+      - name: run semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
