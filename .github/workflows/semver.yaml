@@ -1,4 +1,4 @@
-name: Semver Tagging
+name: semver release
 
 on:
   push:
