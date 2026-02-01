@@ -7,11 +7,10 @@
     line-height: 100%;
     padding-left: 30px;
     color: rgb(250, 250, 222);
-
 }
 
 .nav-link {
-    font-family: 'Belleza', serif;
+    font-family: "Belleza", serif;
     font-size: 1.5em;
     letter-spacing: 1.29px;
     vertical-align: text-bottom;
@@ -36,22 +35,26 @@
     align-items: flex-end;
 
     min-height: 40vh;
-    font-family: 'Belleza', serif;
+    font-family: "Belleza", serif;
 }
 
 p {
     text-align: left;
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
 }
 
+ul {
+    text-align: left;
+    font-family: "Montserrat";
+}
 
 @font-face {
-    font-family: 'roca';
-    src: url('roca-regular.ttf');
+    font-family: "roca";
+    src: url("roca-regular.ttf");
 }
 
 .subheading {
-    font-family: 'roca', serif;
+    font-family: "roca", serif;
     font-style: normal;
     font-weight: bold;
     text-align: left;
@@ -59,7 +62,7 @@ p {
 }
 
 .photo-caption {
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
     font-size: x-small;
     font-style: italic;
     font-weight: lighter;

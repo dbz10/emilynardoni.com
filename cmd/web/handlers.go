@@ -27,6 +27,7 @@ func render(ts *template.Template) (*bytes.Buffer, error) {
 
 }
 
+
 func (app *application) Home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
@@ -117,6 +118,40 @@ func (app *application) Group(w http.ResponseWriter, r *http.Request) {
 		ts, err = loadTemplate("./static/html/group.page.tmpl", "./static/html")
 		if err != nil {
 			log.Printf("Failed to load cv page template with %s", err)
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		}
+	}
+
+	buf, err := render(ts)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+
+	_, err = buf.WriteTo(w)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+}
+
+func (app *application) Teaching(w http.ResponseWriter, r *http.Request) {
+	var (
+		ts  *template.Template
+		ok  bool
+		err error
+	)
+	if app.useCache {
+		ts, ok = app.templateCache["teaching.page.tmpl"]
+		if !ok {
+			log.Println("Couldn't find the `teaching.page.tmpl` template in the template cache")
+			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		ts, err = loadTemplate("./static/html/teaching.page.tmpl", "./static/html")
+		if err != nil {
+			log.Printf("Failed to load teaching page template with %s", err)
 			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		}
 	}

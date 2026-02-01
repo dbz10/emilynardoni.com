@@ -7,6 +7,7 @@ func (app *application) routes() *http.ServeMux {
 	mux.HandleFunc("/", app.Home)
 	mux.HandleFunc("/research", app.Research)
 	mux.HandleFunc("/group", app.Group)
+	mux.HandleFunc("/teaching", app.Teaching)
 	mux.HandleFunc("/cv", app.Cv)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
